@@ -1,0 +1,14 @@
+{
+  "name": "ts-matchCase",
+  "version": "1.0.0",
+  "description": "matchCase, function like php match() structure",
+  "main": "build/index.js",
+  "repository": "git@aurelianosza:aurelianosza/ts-matchCase.git",
+  "author": "Aureliano Neto <aurelianosza@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.2.1",
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4"
+  }
+}
