@@ -1,4 +1,4 @@
-# ts-matchCase
+# ts-match-case
 
 A small and simple function to create **match/case** style branching in TypeScript and JavaScript.  
 Replaces long `if/else` or `switch` statements with a more declarative and type-safe approach.
@@ -26,16 +26,16 @@ Best way to simulate PHP match structure
 ## Installation
 
 ```bash
-npm install ts-matchCase
+npm install ts-match-case
 
 or
 
-yarn add ts-matchCase
+yarn add ts-match-case
 ```
 
 Basic Usage
 ``` ts
-import { matchCase } from "ts-matchCase";
+import { matchCase } from "ts-match-case";
 
 const result = matchCase<number, string>(2, {
     1: () => "one",
@@ -51,7 +51,7 @@ You can pass cases in three formats:
 
 1. Object JSON
 ```ts
-import { matchCase } from "ts-matchCase"
+import { matchCase } from "ts-match-case"
 
 const myFavoriteHero = "Dragonfly"
 
@@ -66,7 +66,7 @@ console.log(witchIsYourFavoriteHero); // Dragonfly
 ```
 With default case
 ```ts
-import { defaultCase, matchCase } from "ts-matchCase"
+import { defaultCase, matchCase } from "ts-match-case"
 
 const car = "Tesla";
 
@@ -84,7 +84,7 @@ console.log(result); // Electric luxury
 2. Array of pairs
 
 ```ts
-import { defaultCase, matchCase } from "ts-matchCase"
+import { defaultCase, matchCase } from "ts-match-case"
 
 const myFavoriteCartoon = "Care Bears";
 
@@ -116,7 +116,7 @@ Using without default cases
 When you use without a defaultCase or "default" a Exception will be thorned
 
 ```ts
-import { matchCase } from "ts-matchCase";
+import { matchCase } from "ts-match-case";
 
 const myFavoriteSport = "chess";
 
@@ -137,7 +137,7 @@ When using true or false as keys in matchCase, never use the object (JSON) forma
 In JavaScript/TypeScript, object keys are always strings, so true/false will be converted to "true" and "false", which can cause unexpected behavior.
 
 ```ts
-import { defaultCase, matchCase } from "ts-matchCase";
+import { defaultCase, matchCase } from "ts-match-case";
 
 const isLoggedIn = true;
 
@@ -173,7 +173,7 @@ console.log(result);
 The `matchCase` utility also supports **functions as keys** (just as list methods). This allows you to defer the evaluation of a case until the pipeline actually checks it, which can optimize performance for expensive or conditional computations.
 
 ```ts
-import { defaultCase, matchCase } from "ts-matchCase";
+import { defaultCase, matchCase } from "ts-match-case";
 
 function isEven(a: number): boolean {
     return a % 2 === 0;
