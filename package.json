@@ -1,6 +1,6 @@
 {
-  "name": "ts-matchCase",
-  "version": "1.0.1",
+  "name": "ts-match-case",
+  "version": "0.0.1",
   "description": "matchCase, function like php match() structure",
   "main": "build/index.js",
   "repository": "git@aurelianosza:aurelianosza/ts-matchCase.git",
