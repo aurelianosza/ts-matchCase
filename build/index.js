@@ -35,17 +35,3 @@ function matchCase(value, cases) {
     }
     throw new Error(`No match found for value: "${value}"`);
 }
-function foo() {
-    // boolean logic
-    return false;
-}
-function bar() {
-    // some other boolean logic
-    return false;
-}
-const result = matchCase(true, [
-    [foo(), () => "foo is correct"],
-    [bar(), () => "bar is correct"],
-    [exports.defaultCase, () => "no correct functions"]
-]); // or false
-console.log(result);
