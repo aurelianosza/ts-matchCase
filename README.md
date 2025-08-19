@@ -3,6 +3,24 @@
 A small and simple function to create **match/case** style branching in TypeScript and JavaScript.  
 Replaces long `if/else` or `switch` statements with a more declarative and type-safe approach.
 
+
+Best way to simulate PHP match structure
+```php
+
+<?php
+    $food = 'cake';
+
+    $return_value = match ($food) {
+        'apple' => 'This food is an apple',
+        'bar' => 'This food is a bar',
+        'cake' => 'This food is a cake',
+    };
+
+    var_dump($return_value);
+?>
+// see in https://www.php.net/manual/en/control-structures.match.php
+
+```
 ---
 
 ## Installation
@@ -22,32 +40,34 @@ import { matchCase } from "ts-matchCase";
 const result = matchCase<number, string>(2, {
     1: () => "one",
     2: () => "two",
-    default: () => "unknown"
+    defaultCase: () => "unknown"
 });
 
 console.log(result); // "two"
 ```
-
 Supported cases formats
 
 You can pass cases in three formats:
 
-1. Object
+1. Object JSON
 ```ts
-import { defaultCase, matchCase } from "ts-matchCase"
+import { matchCase } from "ts-matchCase"
 
 const myFavoriteHero = "Dragonfly"
 
 const witchIsYourFavoriteHero =  matchCase<string, string>(myFavoriteHero, {
     "SpiderMan" : () => "It's spider man",
-    "Batman" : () => "It's Batman"
+    "Batman" : () => "It's Batman",
     "Dragonfly" : () => "It´s Dragonfly"
 });
 
-console.log(witchIsYourFavoriteHero) // Dragonfly
+console.log(witchIsYourFavoriteHero); // Dragonfly
 
 ```
+With default case
 ```ts
+import { defaultCase, matchCase } from "ts-matchCase"
+
 const car = "Tesla";
 
 // using
@@ -57,6 +77,8 @@ const result = matchCase<string, string>(car, {
     'Toyota': () => "Reliable",
     defaultCase: () => "Unknown car" // defaultCase is "default" string value
 });
+
+console.log(result); // Electric luxury
 ```
 
 2. Array of pairs
@@ -73,35 +95,10 @@ const result = matchCase<string, string>(
         ["Scooby-Doo", () => "Mystery-solving fun"],
         ["Care Bears", () => "Heartwarming adventures"],
         [defaultCase, () => "Unknown cartoon"] // or ["default", () => "Unknown cartoon"] 
-    ]
+    ]);
 
 console.log(result); // Heartwarming adventures
-);
 ```
-
-3. Map
-
-```ts
-import { defaultCase, matchCase } from "ts-matchcase";
-
-const myCreature = "Dragon";
-
-// Convert Map to an array so matchCase can use it
-const creatureCases = new Map<string, () => string>([
-    ["Unicorn", () => "Graceful and magical"],
-    ["Dragon", () => "Powerful and fire-breathing"],
-    ["Phoenix", () => "Rises from the ashes"],
-    ["default", () => "Unknown creature"] // or [defaultCase, () => "Unknown creature"]
-]);
-
-const result = matchCase<string, string>(
-    myCreature,
-    creatureCases
-);
-
-console.log(result); // Output: Powerful and fire-breathing
-```
-
 Strong typing
 
 The function is fully generic, preserving both input and output types.
@@ -119,7 +116,7 @@ Using without default cases
 When you use without a defaultCase or "default" a Exception will be thorned
 
 ```ts
-import { matchCase } from "ts-matchcase";
+import { matchCase } from "ts-matchCase";
 
 const myFavoriteSport = "chess";
 
@@ -129,7 +126,7 @@ const result = matchCase<string, string>(
         'basketball': () => "Fast-paced and full of slam dunks",
         'tennis' : () => "Precision, endurance, and skill",
     }
-); // throw new Error(`No match found for value: chess`);
+);// throw new Error(`No match found for value: "chess"`);
 
 console.log(result); // won´t be called 
 
@@ -151,6 +148,9 @@ const message = matchCase<boolean, string>(
     ]
 );
 
+console.log(message); // Welcome back, user!
+
+
 function foo(): boolean {
     // boolean logic
 }
@@ -165,12 +165,36 @@ const result = matchCase<boolean, string>(true, [ // or false, in this case, in 
     [defaultCase, () => "no correct functions"]
 ]) // or false
 
-console.log(result); 
+console.log(result);
 ```
 
-For these cases, use arrays or Map, since they preserve the original key type.
+### Using Functions as Keys in `matchCase`
 
-Default case handling
+The `matchCase` utility also supports **functions as keys** (just as list methods). This allows you to defer the evaluation of a case until the pipeline actually checks it, which can optimize performance for expensive or conditional computations.
 
-Whenever a value is not found, the "default" case will be executed (if provided).
-If no default case exists and no match is found, an error will be thrown.
+```ts
+import { defaultCase, matchCase } from "ts-matchCase";
+
+function isEven(a: number): boolean {
+    return a % 2 === 0;
+}
+
+function isOdd(a: number): boolean {
+    return a % 2 === 1;
+}
+
+const number = rand(); // generic function
+
+const result = matchCase<boolean, string>(true, [
+    [isEven(number), () => "Number is even"],
+    [isOdd(number), () => "Number is positive"],
+    [defaultCase, () => "No conditions matched"]
+]); // the isEven and isOdd will be called before matchCase
+
+const result = matchCase<boolean, string>(true, [
+    [() => isEven(number), () => "Number is even"],
+    [() => isOdd(number), () => "Number is positive"],
+    [defaultCase, () => "No conditions matched"]
+]); // the isEven and isOdd and others methods cases will be called in order inside matchCase
+
+```
