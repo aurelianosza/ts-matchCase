@@ -75,7 +75,7 @@ const result = matchCase<string, string>(car, {
     'Tesla': () => "Electric luxury",
     'Ferrari': () => "Super fast",
     'Toyota': () => "Reliable",
-    defaultCase: () => "Unknown car" // defaultCase is "default" string value
+    defaultCase: () => "Unknown car" // defaultCase is "defaultCase" string value
 });
 
 console.log(result); // Electric luxury
@@ -94,7 +94,7 @@ const result = matchCase<string, string>(
         ["Tom and Jerry", () => "Classic slapstick comedy"],
         ["Scooby-Doo", () => "Mystery-solving fun"],
         ["Care Bears", () => "Heartwarming adventures"],
-        [defaultCase, () => "Unknown cartoon"] // or ["default", () => "Unknown cartoon"] 
+        [defaultCase, () => "Unknown cartoon"] // or ["defaultCase", () => "Unknown cartoon"] 
     ]);
 
 console.log(result); // Heartwarming adventures
@@ -106,7 +106,7 @@ The function is fully generic, preserving both input and output types.
 const result = matchCase<"a" | "b", number>("a", {
     a: () => 10,
     b: () => 20,
-    default: () => 0
+    defaultCase: () => 0
 });
 // result is inferred as number
 ```
